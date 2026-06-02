@@ -2,11 +2,8 @@ package com.coachapp.backend.apis.dto.team;
 
 import lombok.Data;
 
-import java.util.List;
-
 @Data
-public class TeamResponseDTO {
+public class CategoryResponseDTO {
     private String id;
     private String name;
-    private List<CategoryResponseDTO> categories;
 }

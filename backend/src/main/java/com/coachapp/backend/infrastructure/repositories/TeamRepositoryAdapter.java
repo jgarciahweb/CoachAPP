@@ -29,4 +29,10 @@ public class TeamRepositoryAdapter implements TeamRepository {
         return repository.findAll()
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<Team> findById(String id) {
+        return repository.findById(id)
+                .map(mapper::toDomain);
+    }
 }

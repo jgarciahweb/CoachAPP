@@ -1,17 +1,15 @@
 package com.coachapp.backend.domain.model;
 
-import lombok.*;
-
-import java.util.List;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class Team {
+public class Category {
     private String id;
     private String name;
-
-    @Singular
-    private List<Category> categories;
 }
