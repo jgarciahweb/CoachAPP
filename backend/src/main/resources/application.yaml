@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: backend
+  data:
+    mongodb:
+      uri: mongodb://admin:admin@localhost:27017/coachapp?authSource=admin
+server:
+  port: 8080
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
