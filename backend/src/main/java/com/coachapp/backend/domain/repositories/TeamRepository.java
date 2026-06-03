@@ -9,4 +9,5 @@ public interface TeamRepository {
     Mono<Team> save(Team team);
     Flux<Team> findAll();
     Mono<Team> findById(String id);
+    Mono<Team> findByName(String name);
 }
