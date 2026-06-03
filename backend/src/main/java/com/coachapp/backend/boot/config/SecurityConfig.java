@@ -15,7 +15,7 @@ public class SecurityConfig {
                 .cors(corsSpec -> {})
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/health", "/api/teams", "/api/categories" ).permitAll()
+                        .pathMatchers("/api/**").permitAll()
                         .anyExchange().authenticated()
                 )
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)

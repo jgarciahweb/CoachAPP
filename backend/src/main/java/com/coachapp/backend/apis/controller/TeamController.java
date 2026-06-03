@@ -1,14 +1,10 @@
 package com.coachapp.backend.apis.controller;
 
-import com.coachapp.backend.apis.dto.team.AddCategoryRequestDTO;
-import com.coachapp.backend.apis.dto.team.CreateTeamRequestDTO;
-import com.coachapp.backend.apis.dto.team.CreateTeamResponseDTO;
-import com.coachapp.backend.apis.dto.team.TeamResponseDTO;
+import com.coachapp.backend.apis.dto.team.*;
 import com.coachapp.backend.apis.mapper.TeamApiMapper;
+import com.coachapp.backend.application.queries.GetCategoriesQuery;
 import com.coachapp.backend.application.queries.GetTeamsQuery;
-import com.coachapp.backend.application.services.AddCategoryCommandHandler;
-import com.coachapp.backend.application.services.CreateTeamCommandHandler;
-import com.coachapp.backend.application.services.GetTeamsQueryHandler;
+import com.coachapp.backend.application.services.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
@@ -21,6 +17,9 @@ public class TeamController {
     private final CreateTeamCommandHandler createTeamCommandHandler;
     private final AddCategoryCommandHandler addCategoryCommandHandler;
     private final GetTeamsQueryHandler getTeamsQueryHandler;
+    private final GetCategoriesQueryHandler getCategoriesQueryHandler;
+    private final DeleteCategoryCommandHandler deleteCategoryCommandHandler;
+    private final UpdateCategoryCommandHandler updateCategoryCommandHandler;
     private final TeamApiMapper teamApiMapper;
 
     @PostMapping("/teams")
@@ -43,6 +42,31 @@ public class TeamController {
         return Mono.just(request)
                 .map(teamApiMapper::toCommand)
                 .flatMap(addCategoryCommandHandler::execute)
+                .map(teamApiMapper::toResponse);
+    }
+
+    @GetMapping("/categories/{teamId}")
+    public Flux<CategoryResponseDTO> getCategories(@PathVariable String teamId) {
+        return getCategoriesQueryHandler
+                .execute(new GetCategoriesQuery(teamId))
+                .map(teamApiMapper::toResponse);
+    }
+
+    @PutMapping("/categories")
+    public Mono<TeamResponseDTO> updateCategory(@RequestBody UpdateCategoryRequestDTO request) {
+
+        return Mono.just(request)
+                .map(teamApiMapper::toCommand)
+                .flatMap(updateCategoryCommandHandler::execute)
+                .map(teamApiMapper::toResponse);
+    }
+
+    @DeleteMapping("/categories")
+    public Mono<TeamResponseDTO> deleteCategory(@RequestBody DeleteCategoryRequestDTO request) {
+
+        return Mono.just(request)
+                .map(teamApiMapper::toCommand)
+                .flatMap(deleteCategoryCommandHandler::execute)
                 .map(teamApiMapper::toResponse);
     }
 }
