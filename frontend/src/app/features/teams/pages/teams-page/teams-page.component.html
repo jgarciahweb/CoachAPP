@@ -1,20 +1,92 @@
-<div class="p-6">
-  <h1 class="text-2xl font-bold mb-4">Equipos</h1>
+<!-- Header -->
+<div
+  class="mb-10 border-b border-[#1e3a5f] pb-6 flex items-end justify-between"
+>
+  <div>
+    <!-- <p class="text-xs font-semibold tracking-[0.3em] uppercase mb-1 text-[#7fd11b]">
+        Panel de gestión
+      </p> -->
+    <h1
+      class="text-5xl font-black uppercase tracking-tight text-white [font-family:'Barlow_Condensed',sans-serif]"
+    >
+      Equipos
+    </h1>
+  </div>
+</div>
 
-  @for(team of teams; track team.id){
+<!-- Buscador -->
+<div class="relative mb-8 max-w-md">
+  <svg
+    class="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#3d6a9e] pointer-events-none"
+    xmlns="http://www.w3.org/2000/svg"
+    fill="none"
+    viewBox="0 0 24 24"
+    stroke="currentColor"
+    stroke-width="2"
+  >
+    <path
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+    />
+  </svg>
+  <input
+    type="text"
+    [(ngModel)]="searchQuery"
+    placeholder="Buscar equipo..."
+    class="w-full pl-10 pr-4 py-2.5 rounded-lg text-sm text-white placeholder-[#3d6a9e] bg-[#0f2040] border border-[#1e3a5f] focus:outline-none focus:border-[#7fd11b] focus:shadow-[0_0_0_3px_rgba(127,209,27,0.1)] transition-all duration-200"
+  />
+</div>
 
-  <div class="border rounded p-4 mb-4">
-    <h2 class="text-3xl font-bold text-amber-400 underline">
-      {{ team.name }}
-    </h2>
+<!-- Grid -->
+<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-5">
+  @for(team of filteredTeams; track team.id) {
 
-    <ul>
-      @for(category of team.categories; track category.id){
-      <li>
-        {{ category.name }}
-      </li>
-      }
-    </ul>
+  <div
+    class="group relative rounded-lg overflow-hidden bg-[#0f2040] border border-[#1e3a5f] transition-all duration-300 hover:border-[#7fd11b] hover:shadow-[0_0_20px_rgba(127,209,27,0.12)]"
+  >
+    <!-- Línea lateral animada -->
+    <div
+      class="absolute left-0 top-0 h-full w-1 bg-[#7fd11b] scale-y-0 group-hover:scale-y-100 transition-transform duration-300 origin-top"
+    ></div>
+
+    <!-- Nombre -->
+    <div class="px-6 py-5 flex items-center justify-between">
+      <h2
+        class="text-2xl font-black uppercase tracking-tight text-white [font-family:'Barlow_Condensed',sans-serif] group-hover:text-[#7fd11b] transition-colors duration-200"
+      >
+        {{ team.name }}
+      </h2>
+
+      <button
+        class="text-xs font-semibold tracking-widest uppercase text-[#3d6a9e] hover:text-[#7fd11b] transition-colors duration-200 whitespace-nowrap ml-4"
+      >
+        Ver detalle →
+      </button>
+    </div>
+  </div>
+  }
+
+  <!-- Sin resultados -->
+  @if(filteredTeams.length === 0) {
+  <div class="col-span-full text-center py-16 text-[#3d6a9e]">
+    <svg
+      class="w-10 h-10 mx-auto mb-3 opacity-40"
+      xmlns="http://www.w3.org/2000/svg"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        stroke-width="1.5"
+        d="M21 21l-4.35-4.35M17 11A6 6 0 1 1 5 11a6 6 0 0 1 12 0z"
+      />
+    </svg>
+    <p class="text-sm font-semibold tracking-widest uppercase">
+      Sin resultados
+    </p>
   </div>
   }
 </div>
