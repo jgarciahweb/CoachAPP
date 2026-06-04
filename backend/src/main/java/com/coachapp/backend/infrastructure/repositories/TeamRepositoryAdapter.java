@@ -41,4 +41,10 @@ public class TeamRepositoryAdapter implements TeamRepository {
         return repository.findByNameIgnoreCase(name)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<Team> findByCategoryId(String categoryId) {
+        return repository.findByCategoryId(categoryId)
+                .map(mapper::toDomain);
+    }
 }

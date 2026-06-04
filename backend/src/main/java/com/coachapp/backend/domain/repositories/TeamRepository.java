@@ -10,4 +10,5 @@ public interface TeamRepository {
     Flux<Team> findAll();
     Mono<Team> findById(String id);
     Mono<Team> findByName(String name);
+    Mono<Team> findByCategoryId(String categoryId);
 }
