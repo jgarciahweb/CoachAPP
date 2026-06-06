@@ -6,6 +6,9 @@ spring:
       uri: mongodb://admin:admin@localhost:27017/coachapp?authSource=admin
 server:
   port: 8080
+coachapp:
+  jwt:
+    secret: "MiClaveSuperSecretaCoachApp2026JWTMuyLarga"
 management:
   endpoints:
     web:
