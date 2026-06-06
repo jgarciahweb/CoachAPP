@@ -29,4 +29,15 @@ public class PlayerRepositoryAdapter implements PlayerRepository {
                 .findByCategoryIdAndDorsal(categoryId, dorsal)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<Player> findById(String id) {
+        return repository.findById(id)
+                .map(mapper::toDomain);
+    }
+
+    @Override
+    public Mono<Void> deleteById(String id) {
+        return repository.deleteById(id);
+    }
 }

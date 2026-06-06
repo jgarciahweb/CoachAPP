@@ -8,10 +8,10 @@ import lombok.Value;
 @Builder
 public class CreatePlayerCommand {
 
-    private String categoryId;
-    private String firstName;
-    private String lastName;
-    private Integer dorsal;
-    private PositionEnum position;
+    String categoryId;
+    String firstName;
+    String lastName;
+    Integer dorsal;
+    PositionEnum position;
 
 }
