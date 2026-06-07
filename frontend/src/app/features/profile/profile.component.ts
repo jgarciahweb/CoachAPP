@@ -27,8 +27,8 @@ export class ProfileComponent {
   // ── Editar datos ─────────────────────────────────────────
   editForm: FormGroup = this.fb.group({
     firstName: [this.user?.firstName ?? '', [Validators.required, Validators.minLength(2)]],
-    lastName:  ['',                          [Validators.required, Validators.minLength(2)]],
-    email:     [this.user?.email ?? '',      [Validators.required, Validators.email]],
+    lastName:  [this.user?.lastName ?? '',  [Validators.required, Validators.minLength(2)]],
+    email:     [this.user?.email ?? '', [Validators.required, Validators.email]],
   });
 
   // ── Cambiar contraseña ────────────────────────────────────

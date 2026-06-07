@@ -14,10 +14,7 @@ public class SecurityConfig {
         return http
                 .cors(corsSpec -> {})
                 .csrf(ServerHttpSecurity.CsrfSpec::disable)
-                .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/api/**").permitAll()
-                        .anyExchange().authenticated()
-                )
+                .authorizeExchange(exchange -> exchange.anyExchange().permitAll())
                 .httpBasic(ServerHttpSecurity.HttpBasicSpec::disable)
                 .formLogin(ServerHttpSecurity.FormLoginSpec::disable)
                 .build();

@@ -26,6 +26,7 @@ export interface LoginResponse {
 export interface AuthUser {
   email: string;
   firstName: string;
+  lastName: string;
   role: string;
 }
 
@@ -88,6 +89,7 @@ export class AuthService {
       return {
         email:     payload.email,
         firstName: payload.firstName,
+        lastName: payload.lastName,
         role:      payload.role,
       };
     } catch {
