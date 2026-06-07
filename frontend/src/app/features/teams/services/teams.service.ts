@@ -1,5 +1,5 @@
 import { inject, Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 import { Team } from '../models/team';
@@ -11,13 +11,24 @@ export class TeamsService {
 
   private http = inject(HttpClient);
 
-  private api =
-    'http://localhost:8080/api';
+  private api = 'http://localhost:8080/api';
+
+  private getAuthHeaders(): HttpHeaders {
+
+    const token = localStorage.getItem('jwt');
+
+    return new HttpHeaders({
+      Authorization: `Bearer ${token}`
+    });
+  }
 
   getTeams(): Observable<Team[]> {
 
     return this.http.get<Team[]>(
-      `${this.api}/teams`
+      `${this.api}/teams`,
+      {
+        headers: this.getAuthHeaders()
+      }
     );
   }
 
@@ -27,7 +38,10 @@ export class TeamsService {
 
     return this.http.post<Team>(
       `${this.api}/teams`,
-      { name }
+      { name },
+      {
+        headers: this.getAuthHeaders()
+      }
     );
   }
 
@@ -41,6 +55,9 @@ export class TeamsService {
       {
         teamId,
         name
+      },
+      {
+        headers: this.getAuthHeaders()
       }
     );
   }
