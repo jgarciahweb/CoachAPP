@@ -27,6 +27,7 @@ public class JwtService {
                 .claim("role", user.getRole().name())
                 .claim("firstName", user.getFirstName())
                 .claim("lastName", user.getLastName())
+                .claim("avatarUrl", user.getAvatarUrl())
                 .issuedAt(new Date())
                 .expiration(expiration)
                 .signWith(getKey())

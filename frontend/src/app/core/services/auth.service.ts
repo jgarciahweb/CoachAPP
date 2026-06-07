@@ -28,6 +28,7 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   role: string;
+  avatarUrl?: string;
 }
 
 export interface UpdateProfileResponse {
@@ -111,8 +112,9 @@ export class AuthService {
       return {
         email:     payload.email,
         firstName: payload.firstName,
-        lastName: payload.lastName,
+        lastName:  payload.lastName,
         role:      payload.role,
+        avatarUrl: `${environment.minioUrl}/${payload.avatarUrl}` ?? null,
       };
     } catch {
       return null;
