@@ -1,13 +1,11 @@
 package com.coachapp.backend.domain.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@With
 @Builder
 public class User {
     private String id;
@@ -16,4 +14,5 @@ public class User {
     private String firstName;
     private String lastName;
     private RoleEnum role;
+    private String avatarUrl;
 }

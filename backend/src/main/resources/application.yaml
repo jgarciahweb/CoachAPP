@@ -9,6 +9,11 @@ server:
 coachapp:
   jwt:
     secret: "MiClaveSuperSecretaCoachApp2026JWTMuyLarga"
+  storage:
+    endpoint: http://localhost:9000
+    access-key: coachapp
+    secret-key: coachapp123
+    bucket: coachapp
 management:
   endpoints:
     web:
