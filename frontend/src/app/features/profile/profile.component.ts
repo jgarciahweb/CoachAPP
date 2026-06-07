@@ -2,6 +2,7 @@ import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, AbstractControl, ValidationErrors } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { AuthService } from '../../core/services/auth.service';
+import {ToastService} from "../../shared/toast/toast.service";
 
 type ActiveSection = 'editar' | 'password' | 'rol';
 
@@ -20,9 +21,11 @@ function passwordMatchValidator(control: AbstractControl): ValidationErrors | nu
 export class ProfileComponent {
   private fb          = inject(FormBuilder);
   private authService = inject(AuthService);
+  private toastService = inject(ToastService);
 
   activeSection: ActiveSection = 'editar';
   user = this.authService.currentUser();
+  isEditLoading = false;
 
   // ── Editar datos ─────────────────────────────────────────
   editForm: FormGroup = this.fb.group({
@@ -68,9 +71,24 @@ export class ProfileComponent {
   }
 
   onEditSubmit(): void {
-    if (this.editForm.invalid) { this.editForm.markAllAsTouched(); return; }
-    // TODO: llamar al servicio
-    console.log('Editar datos:', this.editForm.value);
+    if (this.editForm.invalid) {
+      this.editForm.markAllAsTouched();
+      return;
+    }
+
+    this.isEditLoading = true;
+
+    this.authService.updateProfile(this.editForm.value).subscribe({
+      next: () => {
+        this.user = this.authService.currentUser();
+        this.toastService.success('Datos actualizados correctamente');
+        this.isEditLoading = false;
+      },
+      error: (err) => {
+        this.toastService.error(err.error?.message ?? 'Error al actualizar los datos');
+        this.isEditLoading = false;
+      },
+    });
   }
 
   onPasswordSubmit(): void {

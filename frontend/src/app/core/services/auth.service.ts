@@ -30,6 +30,17 @@ export interface AuthUser {
   role: string;
 }
 
+export interface UpdateProfileResponse {
+  user: {
+    id: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    role: string;
+  };
+  token: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class AuthService {
 
@@ -60,6 +71,17 @@ export class AuthService {
     localStorage.removeItem(this.JWT_KEY);
     this.currentUser.set(null);
     this.router.navigate(['/login']);
+  }
+
+  updateProfile(data: { firstName: string; lastName: string; email: string }): Observable<UpdateProfileResponse> {
+    return this.http.put<UpdateProfileResponse>(`${this.apiUrl}/users/profile`, data, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    }).pipe(
+      tap(response => {
+        localStorage.setItem(this.JWT_KEY, response.token);
+        this.currentUser.set(this.getUserFromToken());
+      })
+    );
   }
 
   getToken(): string | null {
