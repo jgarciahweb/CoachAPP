@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import {AuthService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-login',
@@ -17,7 +18,8 @@ export class LoginComponent {
 
   constructor(
     private fb: FormBuilder,
-    private router: Router
+    private router: Router,
+    private authService: AuthService
   ) {
     this.loginForm = this.fb.group({
       email:    ['', [Validators.required, Validators.email]],
@@ -47,5 +49,13 @@ export class LoginComponent {
     this.isLoading = true;
     this.errorMessage = '';
 
+    this.authService.login(this.loginForm.value).subscribe({
+      next: () => this.router.navigate(['/teams']),
+      error: (err) => {
+        this.errorMessage = err.error?.message ?? 'Credenciales incorrectas';
+        this.isLoading = false;
+      },
+      complete: () => (this.isLoading = false),
+    });
   }
 }
