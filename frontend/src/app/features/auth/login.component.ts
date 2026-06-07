@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angula
 import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import {AuthService} from "../../core/services/auth.service";
+import {ToastService} from "../../shared/toast/toast.service";
 
 @Component({
   selector: 'app-login',
@@ -12,14 +13,14 @@ import {AuthService} from "../../core/services/auth.service";
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  isLoading = false;
+  isLoading    = false;
   showPassword = false;
-  errorMessage = '';
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
-    private authService: AuthService
+    private authService: AuthService,
+    private toastService: ToastService
   ) {
     this.loginForm = this.fb.group({
       email:    ['', [Validators.required, Validators.email]],
@@ -47,12 +48,11 @@ export class LoginComponent {
     }
 
     this.isLoading = true;
-    this.errorMessage = '';
 
     this.authService.login(this.loginForm.value).subscribe({
-      next: () => this.router.navigate(['/teams']),
+      next: () => this.router.navigate(['/equipos']),
       error: (err) => {
-        this.errorMessage = err.error?.message ?? 'Credenciales incorrectas';
+        this.toastService.error(err.error?.message ?? 'Credenciales incorrectas');
         this.isLoading = false;
       },
       complete: () => (this.isLoading = false),

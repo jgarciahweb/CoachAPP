@@ -1,17 +1,23 @@
 import { Routes } from '@angular/router';
-import { TeamsPage } from './features/teams/pages/teams-page/teams-page.component';
-import { LoginComponent } from './features/auth/login.component';
+import {authGuard} from "./core/guards/auth.guards";
 
 export const routes: Routes = [
-
   {
-    path: '',
-    redirectTo: 'teams',
-    pathMatch: 'full'
+    path: 'login',
+    loadComponent: () =>
+      import('./features/auth/login.component').then(m => m.LoginComponent),
   },
-  { path: 'login', component: LoginComponent },
+  {
+    path: 'register',
+    loadComponent: () =>
+      import('./features/auth/register.component').then(m => m.RegisterComponent),
+  },
   {
     path: 'teams',
-    component: TeamsPage
-  }
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/teams/pages/teams-page/teams-page.component').then(m => m.TeamsPage),
+  },
+  { path: '',   redirectTo: 'teams', pathMatch: 'full' },
+  { path: '**', redirectTo: 'teams' },
 ];

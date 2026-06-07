@@ -1,7 +1,7 @@
-import { Component, OnInit, HostListener, ElementRef } from '@angular/core';
-import { Router, RouterLink } from '@angular/router';
+import { Component, HostListener, ElementRef, inject } from '@angular/core';
+import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { AuthService, AuthUser } from '../../core/services/auth.service';
+import {AuthService} from "../../core/services/auth.service";
 
 @Component({
   selector: 'app-auth-button',
@@ -9,25 +9,16 @@ import { AuthService, AuthUser } from '../../core/services/auth.service';
   imports: [CommonModule, RouterLink],
   templateUrl: './auth-button.component.html',
 })
-export class AuthButtonComponent implements OnInit {
-  user: AuthUser | null = null;
+export class AuthButtonComponent {
+  authService  = inject(AuthService);
   dropdownOpen = false;
 
-  constructor(
-    private authService: AuthService,
-    private router: Router,
-    private elRef: ElementRef
-  ) {}
-
-  ngOnInit() {
-    this.user = this.authService.getCurrentUser();
-  }
+  constructor(private elRef: ElementRef) {}
 
   toggleDropdown() {
     this.dropdownOpen = !this.dropdownOpen;
   }
 
-  // Cierra el dropdown al hacer click fuera
   @HostListener('document:click', ['$event'])
   onClickOutside(event: MouseEvent) {
     if (!this.elRef.nativeElement.contains(event.target)) {
@@ -37,7 +28,6 @@ export class AuthButtonComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.user = null;
     this.dropdownOpen = false;
   }
 }

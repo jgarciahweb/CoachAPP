@@ -1,0 +1,47 @@
+@if(toastService.toast()) {
+  <div
+    class="fixed top-20 right-6 z-[100] min-w-[280px] max-w-sm
+         flex items-center gap-3 px-5 py-3.5 rounded-xl
+         shadow-[0_8px_32px_rgba(0,0,0,0.4)] border
+         animate-in fade-in slide-in-from-top-4 duration-300"
+    [class.bg-[#0f2040]]="true"
+    [class.border-[#7fd11b]]="toastService.toast()!.type === 'success'"
+    [class.border-red-500]="toastService.toast()!.type === 'error'"
+    >
+    <!-- Icono success -->
+  @if(toastService.toast()!.type === 'success') {
+    <div class="w-7 h-7 rounded-full bg-[#7fd11b]/15 flex items-center justify-center flex-shrink-0">
+      <svg class="w-4 h-4 text-[#7fd11b]" xmlns="http://www.w3.org/2000/svg"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+  }
+
+  <!-- Icono error -->
+  @if(toastService.toast()!.type === 'error') {
+    <div class="w-7 h-7 rounded-full bg-red-500/15 flex items-center justify-center flex-shrink-0">
+      <svg class="w-4 h-4 text-red-400" xmlns="http://www.w3.org/2000/svg"
+           fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+        <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+      </svg>
+    </div>
+  }
+
+  <!-- Mensaje -->
+  <p class="text-sm font-semibold"
+     [class.text-[#7fd11b]]="toastService.toast()!.type === 'success'"
+     [class.text-red-400]="toastService.toast()!.type === 'error'">
+    {{ toastService.toast()!.message }}
+  </p>
+
+  <!-- Cerrar -->
+  <button (click)="toastService.dismiss()"
+          class="ml-2 text-[#3d6a9e] hover:text-white transition-colors flex-shrink-0">
+    <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none"
+         viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+    </svg>
+  </button>
+  </div>
+}

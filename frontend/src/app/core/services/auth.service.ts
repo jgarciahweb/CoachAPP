@@ -1,14 +1,19 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import {environment} from "../../../enviroment";
 
-
-
 export interface LoginRequest {
   email: string;
   password: string;
+}
+
+export interface RegisterRequest {
+  firstName: string;
+  lastName:  string;
+  email:     string;
+  password:  string;
 }
 
 export interface LoginResponse {
@@ -30,26 +35,32 @@ export class AuthService {
   private readonly JWT_KEY = 'jwt';
   private readonly apiUrl = environment.apiUrl;
 
+  // Signal reactivo del usuario actual
+  currentUser = signal<AuthUser | null>(this.getUserFromToken());
+
   constructor(private http: HttpClient, private router: Router) {}
 
-  // ─── Login ───────────────────────────────────────────────
   login(credentials: LoginRequest): Observable<LoginResponse> {
     return this.http
       .post<LoginResponse>(`${this.apiUrl}/auth/login`, credentials)
       .pipe(
         tap(response => {
           localStorage.setItem(this.JWT_KEY, response.token);
+          this.currentUser.set(this.getUserFromToken());
         })
       );
   }
 
-  // ─── Logout ──────────────────────────────────────────────
+  register(data: RegisterRequest): Observable<void> {
+    return this.http.post<void>(`${this.apiUrl}/auth/register`, data);
+  }
+
   logout(): void {
     localStorage.removeItem(this.JWT_KEY);
+    this.currentUser.set(null);
     this.router.navigate(['/login']);
   }
 
-  // ─── Token ───────────────────────────────────────────────
   getToken(): string | null {
     return localStorage.getItem(this.JWT_KEY);
   }
@@ -69,11 +80,9 @@ export class AuthService {
     }
   }
 
-  // ─── Usuario actual ───────────────────────────────────────
-  getCurrentUser(): AuthUser | null {
+  private getUserFromToken(): AuthUser | null {
     const token = this.getToken();
     if (!token || this.isTokenExpired(token)) return null;
-
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
       return {
@@ -84,5 +93,10 @@ export class AuthService {
     } catch {
       return null;
     }
+  }
+
+  // Mantener por compatibilidad
+  getCurrentUser(): AuthUser | null {
+    return this.currentUser();
   }
 }
