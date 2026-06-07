@@ -1,8 +1,8 @@
-package com.coachapp.backend.application.services;
+package com.coachapp.backend.application.services.team;
 
 import com.coachapp.backend.application.command.team.CreateTeamCommand;
 import com.coachapp.backend.application.shared.CommandHandler;
-import com.coachapp.backend.application.validation.CreateTeamConstraintChecker;
+import com.coachapp.backend.application.validation.team.CreateTeamConstraintChecker;
 import com.coachapp.backend.domain.mappers.TeamMapper;
 import com.coachapp.backend.domain.model.Team;
 import com.coachapp.backend.domain.repositories.TeamRepository;

@@ -29,4 +29,10 @@ public class UserRepositoryAdapter implements UserRepository {
         return repository.findByEmailIgnoreCase(email)
                 .map(mapper::toDomain);
     }
+
+    @Override
+    public Mono<User> findById(String id) {
+        return repository.findById(id)
+                .map(mapper::toDomain);
+    }
 }

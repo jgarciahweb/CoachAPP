@@ -1,4 +1,4 @@
-package com.coachapp.backend.application.services;
+package com.coachapp.backend.application.services.team;
 
 import com.coachapp.backend.application.queries.GetTeamsQuery;
 import com.coachapp.backend.application.shared.QueryHandler;

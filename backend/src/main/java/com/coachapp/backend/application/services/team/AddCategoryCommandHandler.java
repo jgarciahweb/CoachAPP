@@ -1,8 +1,8 @@
-package com.coachapp.backend.application.services;
+package com.coachapp.backend.application.services.team;
 
 import com.coachapp.backend.application.command.team.AddCategoryCommand;
 import com.coachapp.backend.application.shared.CommandHandler;
-import com.coachapp.backend.application.validation.AddCategoryConstraintChecker;
+import com.coachapp.backend.application.validation.team.AddCategoryConstraintChecker;
 import com.coachapp.backend.domain.mappers.CategoryMapper;
 import com.coachapp.backend.domain.model.Category;
 import com.coachapp.backend.domain.model.Team;

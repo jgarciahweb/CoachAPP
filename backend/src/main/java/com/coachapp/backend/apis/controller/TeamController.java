@@ -4,7 +4,7 @@ import com.coachapp.backend.apis.dto.team.*;
 import com.coachapp.backend.apis.mapper.TeamApiMapper;
 import com.coachapp.backend.application.queries.GetCategoriesQuery;
 import com.coachapp.backend.application.queries.GetTeamsQuery;
-import com.coachapp.backend.application.services.*;
+import com.coachapp.backend.application.services.team.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;

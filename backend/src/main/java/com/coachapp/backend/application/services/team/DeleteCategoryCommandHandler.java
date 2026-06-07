@@ -1,8 +1,8 @@
-package com.coachapp.backend.application.services;
+package com.coachapp.backend.application.services.team;
 
 import com.coachapp.backend.application.command.team.DeleteCategoryCommand;
 import com.coachapp.backend.application.shared.CommandHandler;
-import com.coachapp.backend.application.validation.DeleteCategoryConstraintChecker;
+import com.coachapp.backend.application.validation.team.DeleteCategoryConstraintChecker;
 import com.coachapp.backend.domain.model.Category;
 import com.coachapp.backend.domain.model.Team;
 import com.coachapp.backend.domain.repositories.TeamRepository;

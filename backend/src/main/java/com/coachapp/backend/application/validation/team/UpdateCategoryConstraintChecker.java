@@ -1,4 +1,4 @@
-package com.coachapp.backend.application.validation;
+package com.coachapp.backend.application.validation.team;
 
 import com.coachapp.backend.application.command.team.UpdateCategoryCommand;
 import com.coachapp.backend.domain.repositories.TeamRepository;

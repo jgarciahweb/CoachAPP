@@ -3,9 +3,11 @@ package com.coachapp.backend.apis.mapper;
 import com.coachapp.backend.apis.dto.auth.LoginRequestDTO;
 import com.coachapp.backend.apis.dto.auth.LoginResponseDTO;
 import com.coachapp.backend.apis.dto.user.RegisterUserRequestDTO;
+import com.coachapp.backend.apis.dto.user.UpdateProfileRequestDTO;
 import com.coachapp.backend.apis.dto.user.UserResponseDTO;
 import com.coachapp.backend.application.command.auth.LoginCommand;
 import com.coachapp.backend.application.command.user.RegisterUserCommand;
+import com.coachapp.backend.application.command.user.UpdateProfileCommand;
 import com.coachapp.backend.domain.model.LoginResult;
 import com.coachapp.backend.domain.model.User;
 import org.mapstruct.Mapper;
@@ -21,6 +23,19 @@ public interface UserApiMapper {
     @Mapping(target = "token", source = "token")
     @Mapping(target = "email", source = "user.email")
     @Mapping(target = "firstName", source = "user.firstName")
+    @Mapping(target = "lastName", source = "user.lastName")
     @Mapping(target = "role", expression = "java(loginResult.getUser().getRole().name())")
     LoginResponseDTO toResponse(LoginResult loginResult);
+
+    default UpdateProfileCommand toCommand(
+            String userId,
+            UpdateProfileRequestDTO request
+    ) {
+        return UpdateProfileCommand.builder()
+                .userId(userId)
+                .email(request.getEmail())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .build();
+    }
 }

@@ -1,4 +1,4 @@
-package com.coachapp.backend.application.validation;
+package com.coachapp.backend.application.validation.team;
 
 import com.coachapp.backend.application.command.team.AddCategoryCommand;
 import org.springframework.stereotype.Component;

@@ -1,4 +1,4 @@
-package com.coachapp.backend.application.validation;
+package com.coachapp.backend.application.validation.team;
 
 import com.coachapp.backend.application.command.team.CreateTeamCommand;
 import com.coachapp.backend.domain.repositories.TeamRepository;
@@ -21,7 +21,7 @@ public class CreateTeamConstraintChecker {
         return teamRepository.findByName(command.getName())
                 .hasElement()
                 .flatMap(exists -> {
-                    if (exists) {
+                    if (Boolean.TRUE.equals(exists)) {
                         return Mono.error(new IllegalArgumentException("Team already exists"));
                     }
 
