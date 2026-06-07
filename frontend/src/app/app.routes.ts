@@ -13,6 +13,12 @@ export const routes: Routes = [
       import('./features/auth/register.component').then(m => m.RegisterComponent),
   },
   {
+    path: 'profile',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./features/profile/profile.component').then(m => m.ProfileComponent),
+  },
+  {
     path: 'teams',
     canActivate: [authGuard],
     loadComponent: () =>
