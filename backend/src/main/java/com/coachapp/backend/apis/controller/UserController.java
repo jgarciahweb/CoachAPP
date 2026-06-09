@@ -36,7 +36,6 @@ public class UserController {
                 .file(file)
                 .build();
 
-        return uploadAvatarCommandHandler.execute(command)
-                .map(userApiMapper::toAvatarResponse);
+        return uploadAvatarCommandHandler.execute(command);
     }
 }

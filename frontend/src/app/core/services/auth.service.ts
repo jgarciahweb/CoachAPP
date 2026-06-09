@@ -28,7 +28,12 @@ export interface AuthUser {
   firstName: string;
   lastName: string;
   role: string;
-  avatarUrl?: string;
+  avatarUrl?: string | null;
+}
+
+export interface UpdateAvatarResponse {
+  avatarUrl: string;
+  token: string;
 }
 
 export interface UpdateProfileResponse {
@@ -85,6 +90,19 @@ export class AuthService {
     );
   }
 
+  updateAvatar(formData: FormData): Observable<UpdateAvatarResponse> {
+    return this.http.post<UpdateAvatarResponse>(`${this.apiUrl}/users/avatar`, formData, {
+      headers: { Authorization: `Bearer ${this.getToken()}` }
+    }).pipe(
+      tap(response => {
+        if (response?.token) {
+          localStorage.setItem(this.JWT_KEY, response.token);
+          this.currentUser.set(this.getUserFromToken());
+        }
+      })
+    );
+  }
+
   getToken(): string | null {
     return localStorage.getItem(this.JWT_KEY);
   }
@@ -109,12 +127,15 @@ export class AuthService {
     if (!token || this.isTokenExpired(token)) return null;
     try {
       const payload = JSON.parse(atob(token.split('.')[1]));
+      console.log(payload);
       return {
         email:     payload.email,
         firstName: payload.firstName,
         lastName:  payload.lastName,
         role:      payload.role,
-        avatarUrl: `${environment.minioUrl}/${payload.avatarUrl}` ?? null,
+        avatarUrl: payload.avatarUrl
+          ? `${environment.minioUrl}/${payload.avatarUrl}`
+          : null,
       };
     } catch {
       return null;

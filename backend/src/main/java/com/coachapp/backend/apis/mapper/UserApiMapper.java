@@ -4,7 +4,6 @@ import com.coachapp.backend.apis.dto.auth.LoginRequestDTO;
 import com.coachapp.backend.apis.dto.auth.LoginResponseDTO;
 import com.coachapp.backend.apis.dto.user.RegisterUserRequestDTO;
 import com.coachapp.backend.apis.dto.user.UpdateProfileRequestDTO;
-import com.coachapp.backend.apis.dto.user.UploadAvatarResponseDTO;
 import com.coachapp.backend.apis.dto.user.UserResponseDTO;
 import com.coachapp.backend.application.command.auth.LoginCommand;
 import com.coachapp.backend.application.command.user.RegisterUserCommand;
@@ -20,8 +19,6 @@ public interface UserApiMapper {
     RegisterUserCommand toCommand(RegisterUserRequestDTO request);
     UserResponseDTO toResponse(User user);
     LoginCommand toCommand(LoginRequestDTO request);
-
-    UploadAvatarResponseDTO toAvatarResponse(User user);
 
     @Mapping(target = "token", source = "token")
     @Mapping(target = "email", source = "user.email")
